@@ -1,3 +1,4 @@
+import { DateFilterContext } from "@/utils/providers/DateFilterProvider";
 import {
   Box,
   Button,
@@ -7,55 +8,51 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
+import styled from "@emotion/styled";
 import { RangeDatepicker } from "chakra-dayzed-datepicker";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { AiOutlineCalendar } from "react-icons/ai";
 
 export function DateMenu() {
-  const [selectedDates, setSelectedDates] = useState<Date[]>([
-    new Date(),
-    new Date(),
-  ]);
+  const { selectedDates, setSelectedDates } = useContext(DateFilterContext);
 
   return (
     <Box>
       <div style={{ position: "relative" }}>
         <RangeDatepicker
-          propsConfigs={{
-            // inputProps: {
-            //   display: "none",
-            // },
-            inputProps: {
-              variant: "outline",
-              size: "sm",
-              background: "white",
-              pl: 8,
-              borderRadius: 8,
-            },
-            popoverCompProps: {
-              popoverBodyProps: {
-                right: 0,
-                transform: "none",
-              },
-            },
-          }}
-          defaultIsOpen={true}
+          propsConfigs={propsConfigs}
           closeOnSelect={false}
           selectedDates={selectedDates}
           onDateChange={setSelectedDates}
         />
-        <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            transform: "translateY(-50%)",
-            left: 10,
-            zIndex: 1,
-          }}
-        >
+        <SIconWrapper>
           <Icon as={AiOutlineCalendar} />
-        </div>
+        </SIconWrapper>
       </div>
     </Box>
   );
 }
+
+const propsConfigs = {
+  inputProps: {
+    variant: "outline",
+    size: "sm",
+    background: "white",
+    pl: 8,
+    borderRadius: 8,
+  },
+  popoverCompProps: {
+    popoverBodyProps: {
+      right: 0,
+      transform: "none",
+    },
+  },
+};
+
+const SIconWrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 10px;
+  z-index: 1;
+`;
