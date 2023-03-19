@@ -1,5 +1,10 @@
 import { Header } from "@/components/Header/Header";
-import Head from "next/head";
+import { MeetingTable } from "@/components/MeetingTable/MeetingTable";
 export default function Home() {
-  return <Header />;
+  return (
+    <main>
+      <Header />
+      <MeetingTable />
+    </main>
+  );
 }
