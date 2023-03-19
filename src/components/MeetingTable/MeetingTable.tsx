@@ -2,6 +2,7 @@ import { keyToData, keyToName } from "@/components/MeetingTable/dataMapping";
 import { formatDate } from "@/utils/formatDate";
 import { ColumnFilterContext } from "@/utils/providers/ColumnFilterProvider";
 import { SortingContext } from "@/utils/providers/SortingProvider";
+import { TableSelectorContext } from "@/utils/providers/TableSelectorProvider";
 import { MeetingData } from "@/utils/types";
 import {
   Checkbox,
@@ -18,6 +19,23 @@ import React, { useContext } from "react";
 
 export const MeetingTable = ({ meetings }: { meetings?: MeetingData }) => {
   const { filter: columnFilter } = useContext(ColumnFilterContext);
+  const { selectedIds, setSelectedIds } = useContext(TableSelectorContext);
+
+  const changeAllCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      setSelectedIds(meetings?.map((m) => m.meetingId) ?? []);
+    } else {
+      setSelectedIds([]);
+    }
+  };
+  const changeOneCheckbox =
+    (meetingId: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.checked) {
+        setSelectedIds([...selectedIds, meetingId]);
+      } else {
+        setSelectedIds(selectedIds.filter((id) => id !== meetingId));
+      }
+    };
 
   return (
     <TableContainer>
@@ -25,7 +43,10 @@ export const MeetingTable = ({ meetings }: { meetings?: MeetingData }) => {
         <Thead>
           <Tr>
             <Th pl={2} pr={0} lineHeight={1}>
-              <Checkbox />
+              <Checkbox
+                isChecked={selectedIds.length === meetings?.length}
+                onChange={changeAllCheckbox}
+              />
             </Th>
             {columnFilter.map((c) => (
               <STh key={c}>{keyToName[c]}</STh>
@@ -37,7 +58,10 @@ export const MeetingTable = ({ meetings }: { meetings?: MeetingData }) => {
             meetings.map((meeting) => (
               <Tr key={meeting.meetingId}>
                 <Td pl={2} pr={0} lineHeight={1}>
-                  <Checkbox />
+                  <Checkbox
+                    isChecked={selectedIds.includes(meeting.meetingId)}
+                    onChange={changeOneCheckbox(meeting.meetingId)}
+                  />
                 </Td>
                 {columnFilter.map((c) =>
                   c === "next_steps" ? (

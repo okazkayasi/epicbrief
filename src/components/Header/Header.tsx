@@ -3,7 +3,6 @@ import { DateMenu } from "@/components/Header/DateMenu";
 import { FilterMenu } from "@/components/Header/FilterMenu";
 import { SortMenu } from "@/components/Header/SortMenu";
 import { Box, Flex, Spacer, Text } from "@chakra-ui/react";
-import { RangeDatepicker } from "chakra-dayzed-datepicker";
 import React, { useState } from "react";
 
 export const Header = () => {
