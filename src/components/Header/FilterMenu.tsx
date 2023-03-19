@@ -1,4 +1,8 @@
 import {
+  ColumnFilterContext,
+  ColumnFilters,
+} from "@/utils/providers/ColumnFilterProvider";
+import {
   Button,
   Icon,
   Menu,
@@ -7,10 +11,11 @@ import {
   MenuList,
   MenuOptionGroup,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useContext } from "react";
 import { MdOutlineFilterList } from "react-icons/md";
 
 export function FilterMenu() {
+  const { filter, setFilter } = useContext(ColumnFilterContext);
   return (
     <Menu closeOnSelect={false}>
       <MenuButton
@@ -27,12 +32,14 @@ export function FilterMenu() {
           title="Filter"
           type="checkbox"
           onChange={(value) => {
-            console.log(value);
+            setFilter(value as ColumnFilters[]);
           }}
+          value={[...filter]}
         >
-          <MenuItemOption value="email">Email</MenuItemOption>
-          <MenuItemOption value="phone">Phone</MenuItemOption>
-          <MenuItemOption value="country">Country</MenuItemOption>
+          <MenuItemOption value="name">Email</MenuItemOption>
+          <MenuItemOption value="time">Time</MenuItemOption>
+          <MenuItemOption value="account">Account</MenuItemOption>
+          <MenuItemOption value="next_steps">Next Steps</MenuItemOption>
         </MenuOptionGroup>
       </MenuList>
     </Menu>
