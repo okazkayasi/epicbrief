@@ -1,3 +1,4 @@
+import { formatDate } from "@/utils/formatDate";
 import { MeetingData } from "@/utils/types";
 import {
   Table,
@@ -45,7 +46,11 @@ export const MeetingTable = ({ meetings }: { meetings?: MeetingData }) => {
                   <Checkbox />
                 </Td>
                 <STd pl={2}>{meeting.meetingTitle}</STd>
-                <STd>{meeting.meetingStartDate}</STd>
+                <STd>
+                  {meeting.meetingStartDate
+                    ? formatDate(new Date(meeting.meetingStartDate))
+                    : "No date"}
+                </STd>
                 <STd>{meeting.companyName}</STd>
                 <STd
                   dangerouslySetInnerHTML={{
