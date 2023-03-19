@@ -10,6 +10,13 @@ export const ColumnFilterContext = React.createContext<{
   setFilter: () => {},
 });
 
+const sortedColumns = {
+  name: 0,
+  time: 1,
+  account: 2,
+  next_steps: 3,
+};
+
 export const ColumnFilterProvider = ({ children }: { children: ReactNode }) => {
   const [filter, setFilter] = useState<ColumnFilters[]>([
     "name",
@@ -17,10 +24,15 @@ export const ColumnFilterProvider = ({ children }: { children: ReactNode }) => {
     "account",
     "next_steps",
   ]);
+
+  const sortedFilter = filter.sort(
+    (a, b) => sortedColumns[a] - sortedColumns[b]
+  );
+
   return (
     <ColumnFilterContext.Provider
       value={{
-        filter,
+        filter: sortedFilter,
         setFilter,
       }}
     >

@@ -36,7 +36,7 @@ export function FilterMenu() {
           }}
           value={[...filter]}
         >
-          <MenuItemOption value="name">Email</MenuItemOption>
+          <MenuItemOption value="name">Name</MenuItemOption>
           <MenuItemOption value="time">Time</MenuItemOption>
           <MenuItemOption value="account">Account</MenuItemOption>
           <MenuItemOption value="next_steps">Next Steps</MenuItemOption>
