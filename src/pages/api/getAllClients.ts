@@ -16,6 +16,7 @@ type ResponseType = NextApiResponse<Data | ErrorMessage>;
 export default async function handler(req: NextApiRequest, res: ResponseType) {
   if (notAllowed(["POST", "PUT", "DELETE", "PATCH"], req)) {
     res.status(405).json({ message: "Method not allowed" });
+    return;
   }
   const { getAllClients } = describeHubspot();
   const allContact = await getAllClients();
