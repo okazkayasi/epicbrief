@@ -15,16 +15,17 @@ export const Header = () => {
   return (
     <Box bg="lightgray" w={"100%"} py={4} px={2} color="#131313">
       <Text fontSize="xl">Meeting</Text>
+      <Spacer h={4} />
       <Flex>
         <Flex>
           <FilterMenu />
-          <Spacer pr={4} />
+          <Spacer w={4} />
           <ActionsMenu />
         </Flex>
         <Spacer />
         <Flex>
           <SortMenu />
-          <Spacer pr={4} />
+          <Spacer w={4} />
           <DateMenu />
         </Flex>
       </Flex>
