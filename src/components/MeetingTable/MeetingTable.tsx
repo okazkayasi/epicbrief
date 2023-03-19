@@ -1,3 +1,4 @@
+import { MeetingData } from "@/utils/types";
 import {
   Table,
   TableContainer,
@@ -9,6 +10,7 @@ import {
   Checkbox,
 } from "@chakra-ui/react";
 import styled from "@emotion/styled";
+import React from "react";
 
 const STh = styled(Th)`
   border-right: 1px solid lightgrey;
@@ -20,7 +22,7 @@ const STd = styled(Td)`
   border-bottom: 1px solid lightgrey;
 `;
 
-export const MeetingTable = () => {
+export const MeetingTable = ({ meetings }: { meetings?: MeetingData }) => {
   return (
     <TableContainer>
       <Table colorScheme="facebook" variant="simple" size="lg">
@@ -36,21 +38,22 @@ export const MeetingTable = () => {
           </Tr>
         </Thead>
         <Tbody>
-          <Tr>
-            <Td pl={2} pr={0} lineHeight={1}>
-              <Checkbox />
-            </Td>
-            <STd pl={2}>Apple x Startup</STd>
-            <STd>June 22nd, 2023 8:15AM</STd>
-            <STd>Apple</STd>
-            <STd>
-              <ul>
-                <li>Send contract</li>
-                <li>Send contract</li>
-                <li>Send contract</li>
-              </ul>
-            </STd>
-          </Tr>
+          {meetings &&
+            meetings.map((meeting) => (
+              <Tr key={meeting.meetingId}>
+                <Td pl={2} pr={0} lineHeight={1}>
+                  <Checkbox />
+                </Td>
+                <STd pl={2}>{meeting.meetingTitle}</STd>
+                <STd>{meeting.meetingStartDate}</STd>
+                <STd>{meeting.companyName}</STd>
+                <STd
+                  dangerouslySetInnerHTML={{
+                    __html: meeting.internalMeetingNotes ?? "",
+                  }}
+                ></STd>
+              </Tr>
+            ))}
         </Tbody>
       </Table>
     </TableContainer>

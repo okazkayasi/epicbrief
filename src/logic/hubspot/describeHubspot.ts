@@ -23,7 +23,7 @@ export function describeHubspot() {
     getCompanyById: async (id: string) => {
       return await hubspotClient.crm.companies.basicApi.getById(
         id,
-        [],
+        ["name"],
         [],
         ["meetings"]
       );
@@ -43,7 +43,7 @@ export function describeHubspot() {
         [
           "hs_meeting_title",
           "hs_meeting_body",
-          "hs_meeting_start_date",
+          "hs_meeting_start_time",
           "hs_internal_meeting_notes",
         ],
         [],
@@ -52,3 +52,4 @@ export function describeHubspot() {
     },
   });
 }
+
