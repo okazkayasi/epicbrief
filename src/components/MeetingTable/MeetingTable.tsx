@@ -1,7 +1,5 @@
-import {
-  ColumnFilterContext,
-  ColumnFilters,
-} from "@/utils/providers/ColumnFilterProvider";
+import { keyToData, keyToName } from "@/components/MeetingTable/dataMapping";
+import { ColumnFilterContext } from "@/utils/providers/ColumnFilterProvider";
 import { MeetingData } from "@/utils/types";
 import {
   Checkbox,
@@ -16,33 +14,8 @@ import {
 import styled from "@emotion/styled";
 import React, { useContext } from "react";
 
-const STh = styled(Th)`
-  border-right: 1px solid lightgrey;
-  border-bottom: 1px solid lightgrey;
-  text-transform: none;
-`;
-const STd = styled(Td)`
-  border-right: 1px solid lightgrey;
-  border-bottom: 1px solid lightgrey;
-`;
-
-const keyToName: Record<ColumnFilters, string> = {
-  name: "Name",
-  time: "Time",
-  account: "Account",
-  next_steps: "Next steps",
-};
-
-const keyToData: Record<ColumnFilters, keyof MeetingData[number]> = {
-  name: "meetingTitle",
-  time: "meetingStartDate",
-  account: "companyName",
-  next_steps: "internalMeetingNotes",
-};
-
 export const MeetingTable = ({ meetings }: { meetings?: MeetingData }) => {
   const { filter: columnFilter } = useContext(ColumnFilterContext);
-  console.log(columnFilter, "col filter");
 
   return (
     <TableContainer>
@@ -83,3 +56,13 @@ export const MeetingTable = ({ meetings }: { meetings?: MeetingData }) => {
     </TableContainer>
   );
 };
+
+const STh = styled(Th)`
+  border-right: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+  text-transform: none;
+`;
+const STd = styled(Td)`
+  border-right: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+`;
