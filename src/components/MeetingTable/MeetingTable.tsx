@@ -1,5 +1,7 @@
 import { keyToData, keyToName } from "@/components/MeetingTable/dataMapping";
+import { formatDate } from "@/utils/formatDate";
 import { ColumnFilterContext } from "@/utils/providers/ColumnFilterProvider";
+import { SortingContext } from "@/utils/providers/SortingProvider";
 import { MeetingData } from "@/utils/types";
 import {
   Checkbox,
@@ -46,7 +48,11 @@ export const MeetingTable = ({ meetings }: { meetings?: MeetingData }) => {
                       }}
                     />
                   ) : (
-                    <STd key={c}>{meeting[keyToData[c]]}</STd>
+                    <STd key={c}>
+                      {c === "time"
+                        ? formatDate(meeting[keyToData[c]])
+                        : meeting[keyToData[c]]}
+                    </STd>
                   )
                 )}
               </Tr>

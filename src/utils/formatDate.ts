@@ -14,7 +14,9 @@ function ordinalSuffixOf(i: number) {
   return i + "th";
 }
 
-export function formatDate(date: Date) {
+export function formatDate(dateString: string | undefined) {
+  if (!dateString) return "No Date";
+  const date = new Date(dateString);
   const month = date.toLocaleString("default", { month: "long" });
   const day = ordinalSuffixOf(date.getDate());
   const year = date.getFullYear();
