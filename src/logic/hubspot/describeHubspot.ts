@@ -50,6 +50,10 @@ export function describeHubspot() {
         ["companies"]
       );
     },
+    deleteMeetings: async (meetingIds: string[]) => {
+      return await hubspotClient.crm.objects.meetings.batchApi.archive({
+        inputs: meetingIds.map((id) => ({ id })),
+      });
+    },
   });
 }
-
