@@ -23,6 +23,7 @@
     "dayzed": "^3.2.3",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
+    "firebase-admin": "^11.5.0",
     "framer-motion": "^10.6.0",
     "lodash.debounce": "^4.0.8",
     "next": "13.2.4",
