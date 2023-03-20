@@ -32,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: ResponseType) {
 
   const getNextStepsById = meetingIds.map((id) => getNextSteps(id));
   const nextSteps = await Promise.all(getNextStepsById);
-
+  console.log(nextSteps, "next steps");
   const meetingData = meetingRetrievedData.map((meeting) => {
     const associatedCompanyId = meeting.associations?.companies?.results[0].id;
     return {

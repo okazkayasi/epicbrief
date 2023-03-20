@@ -1,4 +1,6 @@
 import { keyToData } from "@/components/MeetingTable/dataMapping";
+import { describeFirestore } from "@/logic/firestore/describeFirestore";
+import { createOrUpdateNextSteps } from "@/utils/createOrUpdateNextSteps";
 import { formatDate } from "@/utils/formatDate";
 import { matchMap } from "@/utils/general";
 import { ColumnFilters } from "@/utils/providers/ColumnFilterProvider";
@@ -19,9 +21,8 @@ export const TdElement = ({
   const [notes, setNotes] = useState(
     meeting.internalMeetingNotes ?? "No notes yet"
   );
-
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    console.log(e.target.value, "debounce", meeting.meetingId);
+  const handleChange = async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    await createOrUpdateNextSteps(meeting.meetingId, e.target.value);
   };
   const debouncedHandleChange = useCallback(debounce(handleChange, 1000), []);
 

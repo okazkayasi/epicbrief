@@ -10,11 +10,15 @@ export const createData = async () => {
 
 export function describeFirestore() {
   return bound({
-    createOrUpdateNextSteps: async (meetingId: string, nextStep: string) => {
+    createOrUpdateNextSteps: async (meetingId: string, nextSteps: string) => {
       const docRef = db.collection("meetings").doc(meetingId);
       await docRef.set({
-        nextStep,
+        nextSteps,
       });
+      return {
+        meetingId,
+        nextSteps,
+      };
     },
     getNextSteps: async (meetingId: string) => {
       const meetingRef = db.collection("meetings").doc(meetingId);
