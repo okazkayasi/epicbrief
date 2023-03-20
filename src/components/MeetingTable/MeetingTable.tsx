@@ -15,6 +15,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import styled from "@emotion/styled";
+import Link from "next/link";
 import React, { useContext } from "react";
 
 export const MeetingTable = ({ meetings }: { meetings?: MeetingData }) => {
@@ -73,9 +74,18 @@ export const MeetingTable = ({ meetings }: { meetings?: MeetingData }) => {
                     />
                   ) : (
                     <STd key={c}>
-                      {c === "time"
-                        ? formatDate(meeting[keyToData[c]])
-                        : meeting[keyToData[c]]}
+                      {c === "time" ? (
+                        formatDate(meeting[keyToData[c]])
+                      ) : c === "name" ? (
+                        <Link
+                          href={`/meeting/${meeting.meetingId}`}
+                          style={{ color: "steelblue" }}
+                        >
+                          {meeting[keyToData[c]]}
+                        </Link>
+                      ) : (
+                        meeting[keyToData[c]]
+                      )}
                     </STd>
                   )
                 )}
