@@ -1,10 +1,6 @@
-import { keyToData, keyToName } from "@/components/MeetingTable/dataMapping";
-import { formatDate } from "@/utils/formatDate";
-import { matchMap } from "@/utils/general";
-import {
-  ColumnFilterContext,
-  ColumnFilters,
-} from "@/utils/providers/ColumnFilterProvider";
+import { keyToName } from "@/components/MeetingTable/dataMapping";
+import { TdElement } from "@/components/MeetingTable/TdElement";
+import { ColumnFilterContext } from "@/utils/providers/ColumnFilterProvider";
 import { TableSelectorContext } from "@/utils/providers/TableSelectorProvider";
 import { MeetingData } from "@/utils/types";
 import {
@@ -18,7 +14,6 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import styled from "@emotion/styled";
-import Link from "next/link";
 import React, { useContext } from "react";
 
 export const MeetingTable = ({ meetings }: { meetings?: MeetingData }) => {
@@ -40,31 +35,6 @@ export const MeetingTable = ({ meetings }: { meetings?: MeetingData }) => {
         setSelectedIds(selectedIds.filter((id) => id !== meetingId));
       }
     };
-
-  const getTdElement = (c: ColumnFilters, meeting: MeetingData[number]) => {
-    return matchMap(c, {
-      next_steps: (
-        <STd
-          key={c}
-          dangerouslySetInnerHTML={{
-            __html: meeting.internalMeetingNotes ?? "",
-          }}
-        />
-      ),
-      name: (
-        <STd key={c}>
-          <Link
-            href={`/meeting/${meeting.meetingId}`}
-            style={{ color: "steelblue" }}
-          >
-            {meeting[keyToData[c]]}
-          </Link>
-        </STd>
-      ),
-      time: <STd key={c}>{formatDate(meeting[keyToData[c]])}</STd>,
-      account: <STd key={c}>{meeting[keyToData[c]]}</STd>,
-    });
-  };
 
   return (
     <TableContainer>
@@ -92,7 +62,9 @@ export const MeetingTable = ({ meetings }: { meetings?: MeetingData }) => {
                     onChange={changeOneCheckbox(meeting.meetingId)}
                   />
                 </Td>
-                {columnFilter.map((c) => getTdElement(c, meeting))}
+                {columnFilter.map((c) => (
+                  <TdElement key={c} c={c} meeting={meeting} />
+                ))}
               </Tr>
             ))}
         </Tbody>
@@ -105,8 +77,4 @@ const STh = styled(Th)`
   border-right: 1px solid lightgrey;
   border-bottom: 1px solid lightgrey;
   text-transform: none;
-`;
-const STd = styled(Td)`
-  border-right: 1px solid lightgrey;
-  border-bottom: 1px solid lightgrey;
 `;

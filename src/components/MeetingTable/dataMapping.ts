@@ -13,3 +13,4 @@ export const keyToData: Record<ColumnFilters, keyof MeetingData[number]> = {
   account: "companyName",
   next_steps: "internalMeetingNotes",
 };
+
