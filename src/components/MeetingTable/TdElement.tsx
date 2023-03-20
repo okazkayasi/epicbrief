@@ -3,10 +3,11 @@ import { formatDate } from "@/utils/formatDate";
 import { matchMap } from "@/utils/general";
 import { ColumnFilters } from "@/utils/providers/ColumnFilterProvider";
 import { MeetingData } from "@/utils/types";
-import { Td } from "@chakra-ui/react";
+import { Td, Textarea } from "@chakra-ui/react";
 import styled from "@emotion/styled";
+import debounce from "lodash.debounce";
 import Link from "next/link";
-import React from "react";
+import React, { useCallback, useState } from "react";
 
 export const TdElement = ({
   c,
@@ -15,14 +16,29 @@ export const TdElement = ({
   c: ColumnFilters;
   meeting: MeetingData[number];
 }) => {
+  const [notes, setNotes] = useState(
+    meeting.internalMeetingNotes ?? "No notes yet"
+  );
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    console.log(e.target.value, "debounce");
+  };
+  const debouncedHandleChange = useCallback(debounce(handleChange, 1000), []);
+
   return matchMap(c, {
     next_steps: (
-      <STd
-        key={c}
-        dangerouslySetInnerHTML={{
-          __html: meeting.internalMeetingNotes ?? "",
-        }}
-      />
+      <STd p={0} key={c}>
+        <Textarea
+          value={notes}
+          size="lg"
+          outline="none"
+          border="none"
+          onChange={(e) => {
+            setNotes(e.target.value);
+            debouncedHandleChange(e);
+          }}
+        />
+      </STd>
     ),
     name: (
       <STd key={c}>

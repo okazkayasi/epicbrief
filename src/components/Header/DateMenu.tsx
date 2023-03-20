@@ -1,16 +1,8 @@
 import { DateFilterContext } from "@/utils/providers/DateFilterProvider";
-import {
-  Box,
-  Button,
-  Icon,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-} from "@chakra-ui/react";
+import { Box, Icon } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import { RangeDatepicker } from "chakra-dayzed-datepicker";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { AiOutlineCalendar } from "react-icons/ai";
 
 export function DateMenu() {
