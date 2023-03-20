@@ -1,3 +1,4 @@
+import { Footer } from "@/components/Footer/Footer";
 import { Header } from "@/components/Header/Header";
 import { MeetingTable } from "@/components/MeetingTable/MeetingTable";
 import { useMeetings } from "@/utils/hooks/useMeetings";
@@ -25,7 +26,6 @@ export default function Home() {
   const { meetings, error, isLoading } = useMeetings();
   const { sort } = useContext(SortingContext);
   const { selectedDates } = useContext(DateFilterContext);
-  console.log(selectedDates, "dates");
 
   const meetingsSorted = meetings?.sort((a, b) => {
     const aVal = a[sortMap[sort]];
@@ -55,15 +55,25 @@ export default function Home() {
   });
 
   const totalPages = Math.ceil((meetingsFiltered?.length ?? 0) / ITEM_PER_PAGE);
-  const paginatedMeetings = meetingsFiltered?.slice(
-    (page - 1) * ITEM_PER_PAGE,
-    page * ITEM_PER_PAGE
+  const startInd = (page - 1) * ITEM_PER_PAGE;
+  const endInd = Math.min(
+    page * ITEM_PER_PAGE,
+    meetingsFiltered?.length ?? Number.MAX_SAFE_INTEGER
   );
+  const paginatedMeetings = meetingsFiltered?.slice(startInd, endInd);
 
   return (
     <main>
       <Header />
       <MeetingTable meetings={paginatedMeetings} />
+      <Footer
+        numberOfRows={meetings?.length ?? 0}
+        startInd={startInd}
+        endInd={endInd}
+        currentPage={page}
+        totalPages={totalPages}
+        setPage={setPage}
+      />
     </main>
   );
 }
