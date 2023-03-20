@@ -25,8 +25,6 @@ export default async function handler(req: NextApiRequest, res: ResponseType) {
 
   const { getMeetingById } = describeHubspot();
   const meeting = await getMeetingById(requestMeetingId);
-  console.log(typeof req.body);
-  console.log(req.body, req.body.nextStep, "req body");
 
   if (req.method === "PUT") {
     const { createOrUpdateNextSteps } = describeFirestore();

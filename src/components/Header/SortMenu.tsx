@@ -38,7 +38,6 @@ export function SortMenu() {
         {sortOptions.map((option) => (
           <MenuItem
             onClick={(e) => {
-              console.log(option, "opt");
               setSort(option);
             }}
             value={option}
