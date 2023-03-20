@@ -1,10 +1,14 @@
-import { createData } from "@/logic/firestore/describeFirestore";
+import {
+  createData,
+  describeFirestore,
+} from "@/logic/firestore/describeFirestore";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  createData();
-  res.status(200).json({});
+  const { getNextSteps } = describeFirestore();
+  const snap = await getNextSteps("16492017392");
+  res.status(200).json(snap);
 }

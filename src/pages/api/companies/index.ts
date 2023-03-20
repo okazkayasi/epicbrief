@@ -1,3 +1,4 @@
+import { describeFirestore } from "@/logic/firestore/describeFirestore";
 import { describeHubspot } from "@/logic/hubspot/describeHubspot";
 import { notAllowed } from "@/logic/hubspot/unallowedMethods";
 import { ErrorMessage } from "@/pages/api/getAllClients";
@@ -14,6 +15,7 @@ export default async function handler(req: NextApiRequest, res: ResponseType) {
     res.status(405).json({ message: "Method not allowed" });
   }
   const { getAllCompanies, getCompanyById, getMeetingById } = describeHubspot();
+  const { getNextSteps } = describeFirestore();
   const allCompanies = await getAllCompanies();
   const companyIds = allCompanies.map((company) => company.id);
 
