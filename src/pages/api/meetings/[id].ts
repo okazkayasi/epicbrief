@@ -30,10 +30,7 @@ export default async function handler(req: NextApiRequest, res: ResponseType) {
 
   if (req.method === "PUT") {
     const { createOrUpdateNextSteps } = describeFirestore();
-    const { nextStep } = await createOrUpdateNextSteps(
-      requestMeetingId,
-      req.body.nextStep
-    );
+    await createOrUpdateNextSteps(requestMeetingId, req.body.nextStep);
     res.status(200).json({ meeting });
     return;
   }
