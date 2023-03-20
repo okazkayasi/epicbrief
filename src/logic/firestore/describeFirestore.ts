@@ -21,10 +21,14 @@ export function describeFirestore() {
       const doc = await meetingRef.get();
       if (!doc.exists) {
         return {
+          meetingId,
           nextSteps: "No Next Step Yet",
         };
       } else {
-        return doc.data();
+        return {
+          meetingId,
+          nextSteps: doc.data()?.nextSteps,
+        };
       }
     },
   });

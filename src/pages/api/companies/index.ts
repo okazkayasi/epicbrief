@@ -28,12 +28,16 @@ export default async function handler(req: NextApiRequest, res: ResponseType) {
     .map((x) => x.id);
 
   const getMeetingsById = meetingIds.map((id) => getMeetingById(id));
-
   const meetingRetrievedData = await Promise.all(getMeetingsById);
+
+  const getNextStepsById = meetingIds.map((id) => getNextSteps(id));
+  const nextSteps = await Promise.all(getNextStepsById);
+
   const meetingData = meetingRetrievedData.map((meeting) => {
     const associatedCompanyId = meeting.associations?.companies?.results[0].id;
     return {
-      internalMeetingNotes: meeting.properties.hs_internal_meeting_notes,
+      internalMeetingNotes: nextSteps.find((n) => n.meetingId === meeting.id)
+        ?.nextSteps,
       meetingTitle: meeting.properties.hs_meeting_title,
       meetingBody: meeting.properties.hs_meeting_body,
       meetingStartDate: meeting.properties.hs_meeting_start_time,
