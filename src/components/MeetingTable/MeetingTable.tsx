@@ -1,7 +1,10 @@
 import { keyToData, keyToName } from "@/components/MeetingTable/dataMapping";
 import { formatDate } from "@/utils/formatDate";
-import { ColumnFilterContext } from "@/utils/providers/ColumnFilterProvider";
-import { SortingContext } from "@/utils/providers/SortingProvider";
+import { matchMap } from "@/utils/general";
+import {
+  ColumnFilterContext,
+  ColumnFilters,
+} from "@/utils/providers/ColumnFilterProvider";
 import { TableSelectorContext } from "@/utils/providers/TableSelectorProvider";
 import { MeetingData } from "@/utils/types";
 import {
@@ -38,6 +41,31 @@ export const MeetingTable = ({ meetings }: { meetings?: MeetingData }) => {
       }
     };
 
+  const getTdElement = (c: ColumnFilters, meeting: MeetingData[number]) => {
+    return matchMap(c, {
+      next_steps: (
+        <STd
+          key={c}
+          dangerouslySetInnerHTML={{
+            __html: meeting.internalMeetingNotes ?? "",
+          }}
+        />
+      ),
+      name: (
+        <STd key={c}>
+          <Link
+            href={`/meeting/${meeting.meetingId}`}
+            style={{ color: "steelblue" }}
+          >
+            {meeting[keyToData[c]]}
+          </Link>
+        </STd>
+      ),
+      time: <STd key={c}>{formatDate(meeting[keyToData[c]])}</STd>,
+      account: <STd key={c}>{meeting[keyToData[c]]}</STd>,
+    });
+  };
+
   return (
     <TableContainer>
       <Table colorScheme="facebook" variant="simple" size="lg">
@@ -64,31 +92,7 @@ export const MeetingTable = ({ meetings }: { meetings?: MeetingData }) => {
                     onChange={changeOneCheckbox(meeting.meetingId)}
                   />
                 </Td>
-                {columnFilter.map((c) =>
-                  c === "next_steps" ? (
-                    <STd
-                      key={c}
-                      dangerouslySetInnerHTML={{
-                        __html: meeting.internalMeetingNotes ?? "",
-                      }}
-                    />
-                  ) : (
-                    <STd key={c}>
-                      {c === "time" ? (
-                        formatDate(meeting[keyToData[c]])
-                      ) : c === "name" ? (
-                        <Link
-                          href={`/meeting/${meeting.meetingId}`}
-                          style={{ color: "steelblue" }}
-                        >
-                          {meeting[keyToData[c]]}
-                        </Link>
-                      ) : (
-                        meeting[keyToData[c]]
-                      )}
-                    </STd>
-                  )
-                )}
+                {columnFilter.map((c) => getTdElement(c, meeting))}
               </Tr>
             ))}
         </Tbody>
