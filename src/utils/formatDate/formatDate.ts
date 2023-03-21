@@ -1,5 +1,5 @@
 // For Ordinal Suffix => https://stackoverflow.com/a/13627586/4379563
-function ordinalSuffixOf(i: number) {
+export function ordinalSuffixOf(i: number) {
   const j = i % 10,
     k = i % 100;
   if (j == 1 && k != 11) {

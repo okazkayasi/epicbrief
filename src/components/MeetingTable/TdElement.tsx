@@ -1,7 +1,7 @@
 import { keyToData } from "@/components/MeetingTable/dataMapping";
 import { describeFirestore } from "@/logic/firestore/describeFirestore";
 import { createOrUpdateNextSteps } from "@/utils/createOrUpdateNextSteps";
-import { formatDate } from "@/utils/formatDate";
+import { formatDate } from "@/utils/formatDate/formatDate";
 import { matchMap } from "@/utils/general";
 import { ColumnFilters } from "@/utils/providers/ColumnFilterProvider";
 import { MeetingData } from "@/utils/types";
